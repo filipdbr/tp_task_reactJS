@@ -52,6 +52,10 @@
   color: #000;
 }
 
+.ajouterButton:hover {
+  background-color: #CEDFD9;
+}
+
 .task-buttons {
   display: flex; 
   justify-content: flex-end; 
@@ -67,12 +71,12 @@
 }
 
 .task-item button:first-of-type {
-  background-color: #007bff;
+  background-color: #058E3F;
   color: white;
 }
 
 .task-item button:first-of-type:hover {
-  background-color: #0056b3;
+  background-color: #04773B;
 }
 
 .task-item button:last-of-type {

@@ -8,10 +8,16 @@ function App() {
   const [userInput, setUserInput] = useState(''); //la saisie initiale de l'utilisateur est vide
 
   // fonction pour ajouter de nouvelles tâches
-  // trim() afin de supprimer les espaces + if pour vérifier s'il n'est pas vide
   const AddTask = () => {
+    // trim() afin de supprimer les espaces + if pour vérifier s'il n'est pas vide
     if (userInput.trim()) {
-      setTasks([...tasks, { text: userInput, completed: false }]);
+      // créer un nouvel objet de tâche et ajoutez-le au tableau des tâches
+      const newTask = { text: userInput, completed: false };
+      const newTasks = [...tasks, newTask];
+      // tri des éléments
+      const sortedTasks = newTasks.sort((a, b) => a.completed - b.completed);
+      // render de taches triées
+      setTasks(sortedTasks);
       // après la tâche est ajouté, le champ pour la saisie est vidé
       setUserInput('');
     }
@@ -52,7 +58,7 @@ function App() {
           onChange={(e) => setUserInput(e.target.value)} // mettre à jour l'état de l'entrée utilisateur
           placeholder="une tâche (ex : acheter du pain)" // indice pour l'utilisateur
         />
-        <button onClick={AddTask}>Ajouter</button> {/* bouton pour ajouter la nouvelle tâche à la liste */}
+        <button className="ajouterButton" onClick={AddTask}>Ajouter</button> {/* bouton pour ajouter la nouvelle tâche à la liste */}
       </div>
 
       {/* la liste des tâches*/}
