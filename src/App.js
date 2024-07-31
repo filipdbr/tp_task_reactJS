@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import './components/AddTask'
-import './components/TaskItem'
-import './components/TaskList'
+import './App.css';
 
 function App() {
 
@@ -14,16 +12,16 @@ function App() {
   const AddTask = () => {
     if (userInput.trim()) {
       setTasks([...tasks, { text: userInput, completed: false }]);
-      // Après la tâche est ajouté, le champ pour la saisie est vidé
+      // après la tâche est ajouté, le champ pour la saisie est vidé
       setUserInput('');
     }
   };
 
   // fonction pour completer des tâches
   const CompleteTask = (index) => {
-    // Création de nouvelle list qui contient les tâches accomplies
+    // création de nouvelle list qui contient les tâches accomplies
     const newTasks = [...tasks];
-    // Chercher la tâche avec l'index donné et inverser leur valeur
+    // chercher la tâche avec l'index donné et inverser leur valeur
     newTasks[index].completed = !newTasks[index].completed;
     // déplacer une tâche terminée vers la fin de la liste
     newTasks.sort((a, b) => a.completed - b.completed);
@@ -42,7 +40,40 @@ function App() {
 
 
   return (
-    <div>
+    // conteneur d'application
+    <div className="App">
+      <h1>To-Do List</h1>
+
+      {/* saisir une nouvelle tâche*/}
+      <div className="Input">
+        <input
+          type="text" 
+          value={userInput} // props
+          onChange={(e) => setUserInput(e.target.value)} // mettre à jour l'état de l'entrée utilisateur
+          placeholder="une tâche (ex : acheter du pain)" // indice pour l'utilisateur
+        />
+        <button onClick={AddTask}>Ajouter</button> {/* bouton pour ajouter la nouvelle tâche à la liste */}
+      </div>
+
+      {/* la liste des tâches*/}
+      <section>
+        {tasks.map((task, index) => (
+          // mapping le tableau des tâches' ; chaque tâche est enveloppée dans une div avec une clé unique
+          <div key={index} className="task-item">
+            {/* affiche le texte de la tâche ; applique la classe 'completed' si la tâche est terminée */}
+            <span className={`task-text ${task.completed ? 'completed' : ''}`}>
+              {task.text}
+            </span>
+            <div className="task-buttons">
+              <button onClick={() => CompleteTask(index)}>
+                {task.completed ? 'Invalidate' : 'Valide'} {/* le texte change en fonction de l'état de la tâche */}
+              </button>
+              <button onClick={() => RemoveTask(index)}>Supprimer</button> {/* bouton pour supprimer la tâche */}
+            </div>
+          </div>
+        ))}
+      </section>
+
     </div>
   );
 }
